@@ -164,7 +164,7 @@ def main():
     threshold = model_data['thresh']
     
     if args.domain:
-        if :
+        if dga_inspector(domain = args.domain).domain_check():
             domain_without_sub, domain_entropy, domain_consonants, domain_length = dga_inspector(domain = args.domain).domain_check()
             print("Analysing domain...")
             if domain_entropy > 3.8:
