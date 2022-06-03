@@ -25,9 +25,9 @@ class dga_inspector():
                           self.encode = encode
           
     def read_file(filename):
-                        with open(filename) as f:
-                            for line in f:
-                                yield line.strip("\n")
+        with open(filename) as f:
+            for line in f:
+                yield line.strip("\n")
 
 
     def domain_check(domain):
