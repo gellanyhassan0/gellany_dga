@@ -8,7 +8,7 @@ import re
 class dga_inspector():
     
 # init method or constructor
-    def __init__(self, var1= None, title1 = '', var2 = None, title2 = '', transformed = False, read_file = None, hue= None, type =None, label = None, drop = None, encode = None):
+    def __init__(self, pki = None,var1= None, title1 = '', var2 = None, title2 = '', transformed = False, read_file = None, hue= None, type =None, label = None, drop = None, encode = None):
 
                           self.data = data
                           self.var1 = var1
@@ -23,6 +23,7 @@ class dga_inspector():
                           self.label = label
                           self.drop = drop
                           self.encode = encode
+                          self.pki = pki
           
     def read_file(filename):
         with open(filename) as f:
@@ -155,8 +156,9 @@ def main():
     parser = argparse.ArgumentParser(description="DGA domain detection")
     parser.add_argument("-d", "--domain", help="Domain to check")
     parser.add_argument("-f", "--file", help="File with domains. One per line")
+    parser.add_argument("-fp", "--file_pki", help="File with domains. One per line")
     args = parser.parse_args()
-    model_data = pickle.load(open('gib/gib_model.pki', 'rb'))
+    model_data = pickle.load(open(args.file_pki, 'rb'))
     model_mat = model_data['mat']
     threshold = model_data['thresh']
     if args.domain:
