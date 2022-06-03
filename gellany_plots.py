@@ -126,6 +126,15 @@ class dga_inspector():
                     count = consonants.findall(string)
                     return len(count)
 
-      
-                  
+    def gib_detect(self):
+        
+                    model_data = pickle.load(open('gib_model.pki', 'rb'))
+
+                    while True:
+                                l = input()
+                                model_mat = model_data['mat']
+                                threshold = model_data['thresh']
+                                print(gib_detect_train.avg_transition_prob(l, model_mat) > threshold)          
           
+        
+        
