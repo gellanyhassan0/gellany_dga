@@ -8,11 +8,12 @@ import re
 class dga_inspector():
     
 # init method or constructor
-    def __init__(self, domain = None, pki = None):
+    def __init__(self, domain = None, pki = None,  string= None):
 
                           
                           self.pki = pki
                           self.domain = domain
+                          self.string = string
           
     def read_file(filename):
         with open(filename) as f:
@@ -20,13 +21,13 @@ class dga_inspector():
                 yield line.strip("\n")
 
 
-    def domain_check(domain):
+    def domain_check(self):
         # skip tor domains
-        if domain.endswith(".onion"):
+        if self.domain.endswith(".onion"):
             print("Tor domains is ignored...")
             return
         # we only interested in main domain name without subdomain and tld
-        domain_without_sub = tldextract.extract(domain).domain
+        domain_without_sub = tldextract.extract(self.domain).domain
         # skip localized domains
         if domain_without_sub.startswith("xn-"):
             print("Localized domains is ignored...")
@@ -35,7 +36,7 @@ class dga_inspector():
         if len(domain_without_sub) < 6:
             print("Short domains is ignored...")
             return
-        domain_entropy = entropy(domain_without_sub)
+        domain_entropy = dga_inspector(string = domain_without_sub).entropy()
         domain_consonants = count_consonants(domain_without_sub)
         domain_length = len(domain_without_sub)
         return domain_without_sub, domain_entropy, domain_consonants, domain_length
@@ -44,13 +45,13 @@ class dga_inspector():
     
                                             
                                               
-    def entropy(string):
+    def entropy(self):
                     """
                     Calculates the Shannon entropy of a string
                     """
 
                     # get probability of chars in string
-                    prob = [ float(string.count(c)) / len(string) for c in dict.fromkeys(list(string)) ]
+                    prob = [ float(self.string.count(c)) / len(self.string) for c in dict.fromkeys(list(self.string)) ]
 
                     # calculate the entropy
                     entropy = - sum([ p * math.log(p) / math.log(2.0) for p in prob ])
