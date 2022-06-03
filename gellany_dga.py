@@ -8,7 +8,7 @@ import re
 class dga_inspector():
     
 # init method or constructor
-    def __init__(self, pki = None,var1= None, title1 = '', var2 = None, title2 = '', transformed = False, read_file = None, hue= None, type =None, label = None, drop = None, encode = None):
+    def __init__(self, domain = None, pki = None,var1= None, title1 = '', var2 = None, title2 = '', transformed = False, read_file = None, hue= None, type =None, label = None, drop = None, encode = None):
 
                           self.data = data
                           self.var1 = var1
@@ -24,6 +24,7 @@ class dga_inspector():
                           self.drop = drop
                           self.encode = encode
                           self.pki = pki
+                          self.domain = domain
           
     def read_file(filename):
         with open(filename) as f:
@@ -161,9 +162,10 @@ def main():
     model_data = pickle.load(open(args.file_pki, 'rb'))
     model_mat = model_data['mat']
     threshold = model_data['thresh']
+    
     if args.domain:
-        if domain_check(args.domain):
-            domain_without_sub, domain_entropy, domain_consonants, domain_length = domain_check(args.domain)
+        if :
+            domain_without_sub, domain_entropy, domain_consonants, domain_length = dga_inspector(domain = args.domain).domain_check()
             print("Analysing domain...")
             if domain_entropy > 3.8:
                 print("High entropy(>3.8) is a strong indicator of DGA domain.\n"
