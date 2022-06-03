@@ -2,8 +2,10 @@ import pickle
 import tldextract
 import argparse
 import json
+import math
+import re
 
-class backbone():
+class dga_inspector():
     
 # init method or constructor
     def __init__(self, var1= None, title1 = '', var2 = None, title2 = '', transformed = False, read_file = None, hue= None, type =None, label = None, drop = None, encode = None):
@@ -23,9 +25,9 @@ class backbone():
                           self.encode = encode
           
     def read_file(filename):
-    with open(filename) as f:
-        for line in f:
-            yield line.strip("\n")
+                        with open(filename) as f:
+                            for line in f:
+                                yield line.strip("\n")
 
 
     def domain_check(domain):
@@ -102,6 +104,28 @@ class backbone():
             print("File dga_domains.json is created")                    
                                             
                                               
-          
+    def entropy(string):
+                    """
+                    Calculates the Shannon entropy of a string
+                    """
+
+                    # get probability of chars in string
+                    prob = [ float(string.count(c)) / len(string) for c in dict.fromkeys(list(string)) ]
+
+                    # calculate the entropy
+                    entropy = - sum([ p * math.log(p) / math.log(2.0) for p in prob ])
+
+                    return entropy
+
+
+    def count_consonants(string):
+                    """
+                    Counting consonants in a string
+                    """
+                    consonants = re.compile("[bcdfghjklmnpqrstvwxyz]")
+                    count = consonants.findall(string)
+                    return len(count)
+
+      
                   
           
