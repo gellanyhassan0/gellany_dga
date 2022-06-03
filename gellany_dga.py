@@ -8,12 +8,16 @@ import re
 class dga_inspector():
     
 # init method or constructor
-    def __init__(self, domain = None, pki = None,  string= None):
+    def __init__(self, domain = None, pki = None,  string= None, l= None, log_prob_mat= None, n= None, line=none):
 
                           
                           self.pki = pki
                           self.domain = domain
                           self.string = string
+                          self.l = l
+                          self.n = n
+                          self.log_prob_mat = log_prob_mat
+                          self.line = line
           
     def read_file(filename):
         with open(filename) as f:
@@ -37,7 +41,7 @@ class dga_inspector():
             print("Short domains is ignored...")
             return
         domain_entropy = dga_inspector(string = domain_without_sub).entropy()
-        domain_consonants = count_consonants(domain_without_sub)
+        domain_consonants = dga_inspector(string = domain_without_sub).count_consonants()
         domain_length = len(domain_without_sub)
         return domain_without_sub, domain_entropy, domain_consonants, domain_length
 
@@ -59,17 +63,17 @@ class dga_inspector():
                     return entropy
 
 
-    def count_consonants(string):
+    def count_consonants(self):
                     """
                     Counting consonants in a string
                     """
                     consonants = re.compile("[bcdfghjklmnpqrstvwxyz]")
-                    count = consonants.findall(string)
+                    count = consonants.findall(self.string)
                     return len(count)
 
     def gib_detect(self):
         
-                    model_data = pickle.load(open('gib_model.pki', 'rb'))
+                    
 
                     while True:
                                 l = input()
@@ -78,17 +82,17 @@ class dga_inspector():
                                 print(gib_detect_train.avg_transition_prob(l, model_mat) > threshold)   
                                 
                                 
-    def normalize(line):
+    def normalize(self):
                     """ Return only the subset of chars from accepted_chars.
                     This helps keep the  model relatively small by ignoring punctuation, 
                     infrequenty symbols, etc. """
-                    return [c.lower() for c in line if c.lower() in accepted_chars]
+                    return [c.lower() for c in self.line if c.lower() in accepted_chars]
 
-    def ngram(n, l):
+    def ngram(self):
         """ Return all n grams from l after normalizing """
-        filtered = normalize(l)
-        for start in range(0, len(filtered) - n + 1):
-            yield ''.join(filtered[start:start + n])
+        filtered = dga_inspector(line = self.l).normalize()
+        for start in range(0, len(filtered) - self.n + 1):
+            yield ''.join(filtered[start:start + self.n])
 
     def train():
         """ Write a simple model as a pickle file """
@@ -127,12 +131,12 @@ class dga_inspector():
         thresh = (min(good_probs) + max(bad_probs)) / 2
         pickle.dump({'mat': counts, 'thresh': thresh}, open('gib_model.pki', 'wb'))
 
-    def avg_transition_prob(l, log_prob_mat):
+    def avg_transition_prob(self):
         """ Return the average transition prob from l through log_prob_mat. """
         log_prob = 0.0
         transition_ct = 0
-        for a, b in ngram(2, l):
-            log_prob += log_prob_mat[pos[a]][pos[b]]
+        for a, b in dga_inspector(2, self.l).ngram():
+            log_prob += self.log_prob_mat[pos[a]][pos[b]]
             transition_ct += 1
         # The exponentiation translates from log probs to probs.
         return math.exp(log_prob / (transition_ct or 1))                            
@@ -165,7 +169,7 @@ def main():
             if domain_length > 12:
                 print("Long domain name(>12) can also indicate DGA\n"
                       "This domain scored: %d" % domain_length)
-            if not gib_detect_train.avg_transition_prob(domain_without_sub, model_mat) > threshold:
+            if dga_inspector(l = domain_without_sub, log_prob_mat = model_mat).avg_transition_prob() > threshold:
                 print("Domain %s is DGA!" % args.domain)
             else:
                 print("Domain %s is not DGA! Probably safe :)\n"
