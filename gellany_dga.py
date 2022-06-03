@@ -8,7 +8,7 @@ import re
 class dga_inspector():
     
 # init method or constructor
-    def __init__(self, domain = None, pki = None,var1= None, title1 = '', var2 = None, title2 = '', transformed = False, read_file = None, hue= None, type =None, label = None, drop = None, encode = None):
+    def __init__(self, domain = None, pki = None):
 
                           
                           self.pki = pki
