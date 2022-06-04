@@ -1,6 +1,8 @@
 # gellany_dga
 
-we forked from https://github.com/exp0se/dga_detector and destructions code and restruction it as Object-oriented programming (OOP) skeleton to product new class and reduce fale postive and increase probelm solving solution with repleace deeply hardcore in lines
+we forked from https://github.com/exp0se/dga_detector and destructions code and restruction it as Object-oriented programming (OOP) skeleton to product new class and reduce fale postive and increase probelm solving solution with replece deeply hardcore in lines.
+DGA domain detection is based on ngram analysis with trained markov chain model. we replace ngram with simple algo
+
 
 <code>python3 gellany_dga.py --file test.txt
 Working on isqekc.com
@@ -31,4 +33,7 @@ optional arguments:
                         Domain to check
   -f FILE, --file FILE  File with domains. One per line</code><br>
 
-
+next steps :
+   we will integration with alienvalut api , keep watch
+ https://otx.alienvault.com/browse/global/indicators?q=dga&include_inactive=0&sort=-modified&page=1&indicatorsSearch=dga  
+  
