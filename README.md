@@ -3,6 +3,11 @@
 we forked from https://github.com/exp0se/dga_detector and destructions code and restruction it as Object-oriented programming (OOP) skeleton to product new class and reduce fale postive and increase probelm solving solution with replece deeply hardcore in lines.
 DGA domain detection is based on ngram analysis with trained markov chain model. we replace ngram with simple algo
 
+entropy - High entropy is another indicator of DGA domain. Threshold is 3.8
+consonants - High consonants count is an indicator of DGA domain. Threshold is 7
+ength - High domain length can also indicate DGA. Threshold is 12.
+
+
 
 <code>python3 gellany_dga.py --file test.txt
 Working on isqekc.com
