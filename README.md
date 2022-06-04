@@ -7,7 +7,9 @@ entropy - High entropy is another indicator of DGA domain. Threshold is 3.8<br>
 consonants - High consonants count is an indicator of DGA domain. Threshold is 7<br>
 ength - High domain length can also indicate DGA. Threshold is 12.<br>
 
-
+<code>git clone https://github.com/gellanyhassan0/gellany_dga.git</code><br>
+<code>cd gellany_dga</code><br>
+<code>pip install -r requirements.txt</code><br>
 
 <code>python3 gellany_dga.py --file test.txt
 Working on isqekc.com
