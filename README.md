@@ -22,4 +22,13 @@ isqekc
 Domain isqekc.com is DGA!
 </code><br>
 
+<code>python3 gellany_dga.py -h
+usage: gellany_dga.py [-h] [-d DOMAIN] [-f FILE]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d DOMAIN, --domain DOMAIN
+                        Domain to check
+  -f FILE, --file FILE  File with domains. One per line</code><br>
+
 
