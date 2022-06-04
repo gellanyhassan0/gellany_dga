@@ -1,6 +1,6 @@
 # gellany_dga
 
-we fork from https://github.com/exp0se/dga_detector and destructions code and restructer as Object-oriented programming (OOP) to product new class and reduce fale postive and increase probelm solving solution with repleace deeply hardcore in lines
+we fork from https://github.com/exp0se/dga_detector and destructions code and restruction it as Object-oriented programming (OOP) skeleton to product new class and reduce fale postive and increase probelm solving solution with repleace deeply hardcore in lines
 
 <code>python3 gellany_dga.py --file test.txt
 Working on isqekc.com
