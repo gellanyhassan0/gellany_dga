@@ -7,12 +7,10 @@ import re
 
 class dga_inspector():
     
-    def __init__(self, domain = None, filename= None, string = None, log_prob_mat=None, model_data=None, model_mat = None):
+    def __init__(self, domain = None, filename= None, model_data=None, model_mat = None):
 
                        self.domain = domain
                        self.filename = filename   
-                       self.string = string
-                       self.log_prob_mat = log_prob_mat
                        self.model_data = model_data
                        self.model_mat = model_mat
                        
@@ -41,10 +39,12 @@ class dga_inspector():
                 #print("Short domains is ignored...")
                 return
             global domain_entropy
-            domain_entropy = dga_inspector(string = domain_without_sub).entropy()
+            global string
+            string = domain_without_sub 
+            domain_entropy = dga_inspector().entropy()
             #print("domain_entropy", domain_entropy)
             global domain_consonants
-            domain_consonants = dga_inspector(string = domain_without_sub).count_consonants()
+            domain_consonants = dga_inspector().count_consonants()
             #print(domain_consonants)
             global domain_length
             domain_length = len(domain_without_sub)
@@ -59,7 +59,8 @@ class dga_inspector():
                     """
 
                     # get probability of chars in string
-                    prob = [ float(self.string.count(c)) / len(self.string) for c in dict.fromkeys(list(self.string)) ]
+
+                    prob = [ float(string.count(c)) / len(string) for c in dict.fromkeys(list(string)) ]
 
                     # calculate the entropy
                     entropy = - sum([ p * math.log(p) / math.log(2.0) for p in prob ])
@@ -71,7 +72,7 @@ class dga_inspector():
                     Counting consonants in a string
                     """
                     consonants = re.compile("[bcdfghjklmnpqrstvwxyz]")
-                    count = consonants.findall(self.string)
+                    count = consonants.findall(string)
                     return len(count)
 
     def entropy_check(self):
@@ -82,15 +83,11 @@ class dga_inspector():
                            print("High consonants(>7) count is an indicator of DGA domain\n" "This domain scored: %d" % domain_consonants)
                     if domain_length > 12:
                            print("Long domain name(>12) can also indicate DGA\n" "This domain scored: %d" % domain_length)
-                    #model_data = pickle.load(open('gib_model.pki', 'rb'))
-                    #l = input()
-                    #model_mat = model_data['mat']
+                    
                     #print(model_mat)
                     #print(domain_without_sub)
                     global l
                     l = domain_without_sub
-                    global log_prob_mat
-                    log_prob_mat = model_mat
                     threshold = model_data['thresh']
                     if not dga_inspector().avg_transition_prob() > threshold:
                            print("Domain %s is DGA!" % args.domain)
@@ -118,7 +115,7 @@ class dga_inspector():
                      #print("s[i:i+2]", s[i:i+2])
                      #print("a, b", a, b)
                      #print("[pos[a]][pos[b]]",[pos[a]]+[pos[b]])
-                     log_prob += log_prob_mat[pos[a]][pos[b]]
+                     log_prob += model_mat[pos[a]][pos[b]]
                      transition_ct += 1
                      #print("transition_ct", transition_ct)
                      #print("log_prob", log_prob)
@@ -134,17 +131,6 @@ class dga_inspector():
               return math.exp(log_prob / (transition_ct or 1))
 
     
-
-
-
-
-my_parser = argparse.ArgumentParser()
-my_parser.add_argument("-d", "--domain", help="Domain to check")
-my_parser.add_argument("-f", "--file", help="File with domains. One per line")
-args = my_parser.parse_args()
-model_data = pickle.load(open('gib_model.pki', 'rb'))
-model_mat = model_data['mat']
-       
 def main():
 
             
@@ -181,4 +167,13 @@ def main():
                             json.dump(results, f, indent=4)
                     print("File dga_domains.json is created")
 
+
+
+my_parser = argparse.ArgumentParser()
+my_parser.add_argument("-d", "--domain", help="Domain to check")
+my_parser.add_argument("-f", "--file", help="File with domains. One per line")
+args = my_parser.parse_args()
+model_data = pickle.load(open('gib_model.pki', 'rb'))
+model_mat = model_data['mat']
+       
 main()
