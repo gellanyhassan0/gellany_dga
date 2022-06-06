@@ -7,12 +7,10 @@ import re
 
 class dga_inspector():
     
-    def __init__(self, domain = None, filename= None, model_data=None, model_mat = None):
+    def __init__(self, domain = None, filename= None):
 
                        self.domain = domain
                        self.filename = filename   
-                       self.model_data = model_data
-                       self.model_mat = model_mat
                        
                           
 
