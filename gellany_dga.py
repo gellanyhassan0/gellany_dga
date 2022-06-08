@@ -144,7 +144,7 @@ def main():
                         for domain in domains:
                             print("Working on %s" % domain)
                             results["domain"] = domain
-                            if dga_inspector(domain).domain_check():
+                            if dga_inspector(domain = domain).domain_check():
                                 domain_without_sub, domain_entropy, domain_consonants, domain_length = dga_inspector(domain).domain_check()
                                 if domain_entropy > 3.8:
                                     results["high_entropy"] = domain_entropy
